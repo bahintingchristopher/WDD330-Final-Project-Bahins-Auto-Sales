@@ -3,7 +3,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   
-  base: '/WDD330-Final-Project-Bahins-Auto-Sales/', 
+  // base: '/WDD330-Final-Project-Bahins-Auto-Sales/', 
+
+  base: '/',
   
   root: './', 
   build: {
