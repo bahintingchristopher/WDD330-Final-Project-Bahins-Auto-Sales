@@ -105,7 +105,10 @@ function setupForm(car) {
         localStorage.setItem('car-reservation-cart', JSON.stringify(reservations));
         
         alert("Reservation saved! Redirecting to your cart...");
-        window.location.href = "/src/static/reservationCart/reservationCart.html";
+        
+        const baseUrl = import.meta.env.BASE_URL;
+        const cleanBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+        window.location.href = `${cleanBase}src/static/reservationCart/reservationCart.html`;
     });
 }
 

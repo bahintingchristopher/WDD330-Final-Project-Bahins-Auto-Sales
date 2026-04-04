@@ -1,23 +1,59 @@
+// import { loadHeaderFooter, loadDynamicBrands } from './utils.mjs';
+// import { initHeroSlider } from './hero.mjs';
+
+// async function headerfooter7logo() {
+    
+//     await loadHeaderFooter();
+
+//     const path = window.location.pathname;
+
+//     const isHome = path.endsWith('index.html') || 
+//                    path.endsWith('/WDD330-Final-Project-Bahins-Auto-Sales/') || 
+//                    path === '/' || 
+//                    path.endsWith('/');
+
+//     if (isHome) {
+//         console.log("Home page detected - loading hero and brands");
+        
+//         const brandListElement = document.querySelector('.brand-logos');
+//         if (brandListElement) {
+//             await loadDynamicBrands(brandListElement);
+//         }
+
+//         // Initialize from hero.js
+//         initHeroSlider(); 
+//     } 
+// }
+
+// document.addEventListener('DOMContentLoaded', headerfooter7logo);
+// main.js
 import { loadHeaderFooter, loadDynamicBrands } from './utils.mjs';
 import { initHeroSlider } from './hero.mjs';
 
-async function headerfooter7logo() {
-    // Load header and footer
+async function initSite() {
+    // 1. Always load the Header and Footer (Every page needs this)
     await loadHeaderFooter();
 
     const path = window.location.pathname;
 
-    //HOME PAGE LOGIC
-      if (path.endsWith('index.html') || path === '/' || path.endsWith('/')) {
+    // 2. THE STRICT GUARD
+    // Only run if we are at the root / or index.html
+    // AND we are NOT in the static folder
+    const isActuallyHome = (path === '/' || path.endsWith('index.html') || path.endsWith('/WDD330-Final-Project-Bahins-Auto-Sales/')) && 
+                           !path.includes('/static/');
+
+    if (isActuallyHome) {
+        console.log("Home Page Detected: Loading Hero and Brands");
         
         const brandListElement = document.querySelector('.brand-logos');
-        
         if (brandListElement) {
             await loadDynamicBrands(brandListElement);
         }
-        // initialize from hero.js
+        
         initHeroSlider(); 
-    } 
+    } else {
+        console.log("Sub-page Detected: Skipping Hero Slider");
+    }
 }
 
-document.addEventListener('DOMContentLoaded', headerfooter7logo);
+document.addEventListener('DOMContentLoaded', initSite);

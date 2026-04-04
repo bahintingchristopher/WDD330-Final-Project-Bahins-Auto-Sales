@@ -1,9 +1,11 @@
-// vite.config.js
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: './', // This tells Vite index.html is right here in the main folder
+  
+  base: '/WDD330-Final-Project-Bahins-Auto-Sales/', 
+  
+  root: './', 
   build: {
     outDir: 'dist',
     rollupOptions: {

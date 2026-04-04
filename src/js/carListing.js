@@ -1,11 +1,10 @@
 import { loadHeaderFooter } from './utils.mjs';
 import { fetchModelsByMake } from './carInventory.mjs';
 import { getCarImage, renderCarCard } from './gallery.mjs';
-// Keep this import!
+ 
 import { generateRandomPrice, toggleCurrency } from './priceConversion.mjs';
 
-// --- 1. GLOBAL EVENT LISTENER (Outside of all functions) ---
-// This handles clicks for the entire page, even for cars loaded later.
+// GLOBAL EVENT LISTENER (Outside of all functions) ---
 document.addEventListener('click', (e) => {
     const toggleEl = e.target.closest('.price-toggle');
     if (toggleEl) {
@@ -66,17 +65,17 @@ async function renderInventoryList(container, brand, carList) {
     const carCardPromises = carList.map(async (car) => {
         try {
             const modelName = car.Model_Name;
-            // IMPORTANT: This ID must match the one used in Car Details
+            // This ID must match the one used in Car Details
             const carKey = String(car.Model_ID); 
             const imageUrl = await getCarImage(brand, modelName);
 
-            // 2. If this specific car doesn't have a price yet, CREATE IT
+            //If this specific car doesn't have a price yet, CREATE IT
             if (!priceBook[carKey]) {
                 priceBook[carKey] = Math.floor(Math.random() * (45000 - 18000 + 1)) + 18000;
                 bookUpdated = true;
             }
 
-            // 3. Always pull the price from the Book
+            //Always pull the price from the Book
             const usdPrice = priceBook[carKey];
 
             // Ensure renderCarCard is receiving the ID if needed for the data-attributes
@@ -89,20 +88,20 @@ async function renderInventoryList(container, brand, carList) {
 
     const allCards = await Promise.all(carCardPromises);
 
-    // 4. Save the Book back to LocalStorage ONLY if we added new prices
+    //Save the Book back to LocalStorage ONLY if we added new prices
     if (bookUpdated) {
         localStorage.setItem('car_price_book', JSON.stringify(priceBook));
     }
 
     container.innerHTML = allCards.join('');
 
-    // 5. Re-attach button listeners
+    //Re-attach button listeners
     const buttons = container.querySelectorAll('.detail-btn');
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const carBrand = button.getAttribute('data-brand');
             const carModel = button.getAttribute('data-model');
-            window.location.href = `/src/static/car-details/carDetails.html?brand=${carBrand}&model=${carModel}`;
+            window.location.href = `../car-details/carDetails.html?brand=${carBrand}&model=${carModel}`;
         });
     });
 }
