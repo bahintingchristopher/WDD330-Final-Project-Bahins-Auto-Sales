@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="WDD 330 - Bahins Auto Sales as Final Project by  Christopher T. Bahinting.">
+  <title>Reserve Now page - Bahins Auto Sales | Quality Vehicles in Cebu</title>
+
+    <link rel="stylesheet" href="/src/style.css">
+     <link rel="stylesheet" href="/src/mobile.css">
+    <script type="module" src="/src/js/reserveNow.js"></script>
+    
+ 
+
+</head>
+<body>
+  <header id="main-header"></header>
+
+    <main class="reservation-container">
+        <section id="car-summary" class="car-summary-section">
+            <p>Loading vehicle details...</p>
+        </section>
+
+        <section class="reservation-box">
+            <h1>Reserve Your Vehicle</h1>
+            <p class="subtitle">Complete the form to hold this unit.</p>
+
+            <form id="reservation-form">
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" name="name" placeholder="Your Full Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="09XX XXX XXXX" required>
+                </div>
+
+                <button type="submit" class="submit-btn">CONFIRM RESERVATION</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer id="main-footer"></footer>
+    
+   
+</body>
+</html>

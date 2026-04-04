@@ -1,0 +1,110 @@
+/* --- MOBILE CSS --- */
+@media (max-width: 768px) {
+/* Header & Nav */
+nav.container {
+flex-direction: row ; 
+justify-content: space-between;
+padding: 10px 15px;
+align-items: center;
+}
+
+
+.logo h1 {
+font-size: 1.1rem;  
+text-align: left;
+margin: 0;
+line-height: 1.2;
+}
+
+/* .logo h1 span {
+font-size: 0.9rem;
+display: block;  
+} */
+
+
+.header-logo-svg {
+width: 35px; 
+height: auto;
+}
+
+
+.cart-badge {
+width: 18px;
+height: 18px;
+font-size: 0.7rem;
+top: -5px;
+right: -8px;
+}
+
+
+/* Hero Section */
+.cta h1 {
+font-size: 2.2rem ;
+padding: 0 10px;
+}
+
+.hero-box {
+height: 300px;
+}
+
+/* Car Listing */
+#car-list-container {
+grid-template-columns: 1fr;
+padding: 15px;
+}
+
+.car-card img {
+height: 180px;  
+}
+
+/* Brand car Logos in main page */
+.brand-logos {
+padding: 20px;
+justify-content: center;
+gap: 20px;
+}
+
+.brand-item img {
+width: 50px;
+}
+
+/* Car Details Page */
+.details-content {
+grid-template-columns: 1fr;
+gap: 20px;
+padding: 15px;
+}
+
+.details-container h1 {
+font-size: 1.8rem;
+}
+
+#specs-grid {
+margin-left: 0; 
+max-width: 100%;
+}
+
+/* Reservation Page and the form */
+.reservation-container {
+flex-direction: column;
+margin: 10px auto;
+}
+
+.reservation-box {
+min-width: 100%;
+padding: 20px;
+}
+
+/* Cart/Reservation page */
+.cart-item {
+flex-direction: column;
+text-align: center;
+gap: 15px;
+}
+
+/* Utility Buttons should   */
+button, .primary-btn, .submit-btn, .car-card .detail-btn {
+width: 100%;  
+padding: 16px;
+}
+}

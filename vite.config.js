@@ -1,0 +1,19 @@
+// vite.config.js
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  root: './', // This tells Vite index.html is right here in the main folder
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        carListing: resolve(__dirname, 'src/static/car-listing/carListing.html'),
+        carDetails: resolve(__dirname, 'src/static/car-details/carDetails.html'),
+        reserveNow: resolve(__dirname, 'src/static/reserveNow/reserveNow.html'),
+        reservationCart: resolve(__dirname, 'src/static/reservationCart/reservationCart.html')
+      },
+    },
+  },
+});

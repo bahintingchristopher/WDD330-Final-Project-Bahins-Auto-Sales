@@ -1,0 +1,725 @@
+/* --- Global Variables --- */
+:root {
+--background-color:  #FFFFFF;
+--font-color: #03256C;
+--hover-color: #2541B2;
+--accent1-color: #1768AC;
+--accent2-color : #06BEE1;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+ 
+h1, h2, h3, .brand-title {
+font-family: 'Playfair Display', serif;
+}
+
+/* --- Layout Reset --- */
+* {
+box-sizing: border-box;
+}
+
+body {
+margin: 0;
+font-family: 'Montserrat', sans-serif;
+background-color: var(--background-color);
+color: var(--font-color);
+line-height: 1.6;
+display: flex;
+flex-direction: column;
+min-height: 100vh; 
+}
+
+/* Main expands to push the footer down */
+main {
+flex: 1; 
+}
+
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 1.5rem;
+}
+
+/* --- Header & Navigation --- */
+nav.container {
+display: flex;
+justify-content: space-between;  
+align-items: center;
+padding: 10px 20px;
+}
+
+/* The Link that holds the SVG and the Number */
+.cart-link {
+display: inline-flex; 
+align-items: center;
+position: relative; 
+text-decoration: none;
+}
+
+/* The SVG Logo Icon */
+.header-logo-svg {
+width: 50px; 
+height: auto;
+}
+
+/* The counter */
+.cart-badge {
+background-color: var(--accent2-color);  
+color: var(--background-color);
+border-radius: 50%;
+padding: 2px 6px;
+font-size: 0.8rem;
+font-weight: bold;
+position: absolute;
+top: -5px;
+right: -10px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+min-width: 20px;
+height: 20px;
+}
+
+.nav-links a {
+text-decoration: none;
+color: var(--font-color);
+font-weight: 600;
+font-size: 0.95rem;
+transition: color 0.2s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+color: var(--font-color);
+}
+
+
+/* Target the logo image specifically */
+#main-header .logo-img, 
+header img {
+height: 50px;       
+width: auto;        
+max-width: 180px;   
+object-fit: contain;
+padding: 5px 0;
+}
+
+/* --- Hero Section (Home Page) --- */
+.hero-box {
+position: relative;
+width: 100%;
+height: 450px;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--accent2-color);
+text-align: center;
+}
+
+.hero-image {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+z-index: -1;
+filter: brightness(0.45);
+}
+
+.cta h1 {
+font-size: 3.5rem;
+margin-bottom: 1rem;
+font-weight: 800;
+text-shadow: 2px 2px 15px rgba(0,0,0,0.4);
+}
+
+/* --- carlisting area array --- */
+.trusted-brands h2 {
+text-align: center;        
+margin-bottom: 2rem;       
+font-weight: bold;
+letter-spacing: 1px;
+color: var(--font-color);              
+width: 100%;             
+}
+
+.brand-logos {
+display: flex;
+justify-content: space-evenly;
+flex-wrap: wrap;
+padding: 40px;
+
+}
+
+.brand-item img {
+width: 60px;  
+height: auto;
+display: block;
+}
+
+ 
+.brand-logos img:hover {
+filter: grayscale(0%);
+opacity: 1;
+transform: scale(1.1);
+cursor: pointer;  
+transition: all 0.3s ease; 
+color: var(--hover-color); 
+}
+
+#make-select, 
+.filter-controls {
+display: none !important;
+visibility: hidden;
+pointer-events: none;
+}
+
+.card-info {
+display: flex;
+flex-direction: column;
+align-items: center;     
+text-align: center;
+padding: 15px;
+}
+
+.price-box {
+display: flex;
+flex-direction: column;  
+margin-bottom: 10px;
+}
+
+
+
+/* --- Inventory & Search --- */
+.inventory-section {
+max-width: 1200px;
+margin: 0 auto;
+}
+
+#brandSelect {
+max-height: 200px; 
+overflow-y: auto;
+}
+
+#results {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 20px;
+min-height: 200px;  
+}
+
+
+
+.search-area {
+background: white;
+padding: 1.5rem;
+border-radius: 12px;
+box-shadow: var(--shadow);
+display: flex;
+gap: 1rem;
+margin: 0 auto 3rem;
+max-width: 800px;
+align-items: center;
+}
+
+#brandSelect {
+max-height: 200px;  
+overflow-y: auto;
+}
+
+
+#car-list-container {
+display: grid;
+grid-template-columns: repeat(4, 1fr); 
+gap: 20px; 
+padding: 20px;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.car-card .card-content {
+border: 1px solid #ddd;
+border-radius: 8px;
+overflow: hidden;
+background: white;
+display: flex;
+flex-direction: column;
+align-items: center; 
+text-align: center;
+padding: 1.5rem;
+gap: 10px;  
+}
+
+/* car listing view details button */
+.car-card .detail-btn {
+display: block;
+width: 80%;       
+margin: 15px auto;  
+padding: 10px;
+background-color: var(--accent1-color);
+color: var(--background-color);
+text-align: center;
+border: none;
+border-radius: 5px;
+}
+
+.car-card img {
+width: 100%;
+height: 200px;  
+object-fit: cover;
+}
+
+/* --- Buttons --- */
+button, .primary-btn, .submit-btn {
+background: var(--accent1-color);
+color: var(--background-color);
+padding: 14px 28px;
+border: none;
+border-radius: 8px;
+font-weight: 700;
+cursor: pointer;
+font-size: 1rem;
+transition: all 0.2s ease;
+display: inline-block;
+text-align: center;
+}
+
+button:hover, .primary-btn:hover {
+background: var(--hover-color);
+box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/*CAR DETAILS  */
+.details-container h1 {
+text-align: center;
+margin-top: 20px;
+font-size: 2.5rem;
+}
+
+
+.details-content {
+display: grid;
+grid-template-columns: 1.2fr 1fr; 
+gap: 40px;
+align-items: start;
+max-width: 1200px;
+margin: 20px auto;
+padding: 0 20px;
+}
+
+/* Details Link */
+.details-content a {
+text-align: center;
+display: block;
+margin-top: 0;
+font-size: 1.2rem;
+color: var(--background-color);
+background-color: var(--accent1-color);
+padding: 5px 10px;
+}
+
+/* Image Section */
+.car-visual img {
+width: 100%;
+height: auto;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+display: block;
+}
+
+/* Specs Section Styling */
+.car-specs {
+display: block;
+flex-direction: column;
+gap: 15px;
+}
+
+.car-specs p {
+font-size: 1rem;
+color: var(--font-color);
+text-align: center;
+}
+
+#specs-grid {
+display: flex;
+flex-direction: column;  
+gap: 10px;               
+max-width: 400px;        
+margin-left: 20px;       
+text-align: left;        
+}
+
+.spec-item {
+display: flex;
+justify-content: flex-start;  
+border-bottom: 1px solid #eee;  
+padding-bottom: 5px;
+width: 100%;
+}
+
+.highlight-price {
+color: var(--font-color);
+font-weight: bold;
+font-size: 1.2rem;
+}
+
+/* Description Text */
+.description-text {
+line-height: 1.6;
+color: var(--font-color);
+margin: 20px 0;
+}
+
+/* Reserve Button Styling */
+button {
+background-color: var(--accent1-color);
+color: var(--background-color);
+border: none;
+padding: 15px 25px;
+font-size: 1rem;
+font-weight: bold;
+border-radius: 5px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+
+button:hover {
+background-color: var(--hover-color);
+}
+
+/* reserveNow page */
+.reservation-container {
+display: flex;
+flex-wrap: wrap;  
+gap: 40px;
+max-width: 1100px;
+margin: 40px auto;
+padding: 20px;
+align-items: flex-start;
+}
+
+/* The Car Details Box */
+#car-summary {
+flex: 1;
+min-width: 300px;
+border: 1px solid var(--background-color);
+border-radius: 8px;
+padding: 15px;
+background-color: var(--background-color);
+}
+
+#car-summary img {
+width: 100%;             
+height: 200px;          
+object-fit: cover;      
+border-radius: 4px;     
+display: block;         
+margin-bottom: 15px;    
+}
+
+/* reminder hold badge */
+.hold-badge {
+display: inline-block;
+background-color: var(--font-color);  
+color: var(--background-color);            
+padding: 6px 12px;
+border-radius: 4px;
+font-size: 1.2rem;         
+font-weight: 700;
+text-transform: uppercase;
+margin-top: 10px;
+
+ 
+animation: pulse 2s infinite ease-in-out; 
+}
+ 
+@keyframes pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.05); }
+100% { transform: scale(1); } 
+}
+/* The Form Box */
+.reservation-box {
+flex: 1;
+min-width: 350px;
+background: var(--background-color);
+padding: 30px;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+ 
+.form-group {
+margin-bottom: 20px;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 8px;
+font-weight: bold;
+}
+
+.form-group input {
+width: 100%;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;  
+}
+
+/* reservation page  */
+.cart-container {
+padding: 2rem 0;
+max-width: 800px;
+margin: 0 auto;
+}
+
+.cart-grid {
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+margin: 2rem 0;
+}
+
+.cart-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: white;
+padding: 20px;
+margin-bottom: 15px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Remove Button in the reservation cart */
+.remove-btn {
+background-color: var(--background-color);  
+color: var(--font-color);            
+border: 1px solid var(--accent1-color);
+padding: 8px 16px;
+border-radius: 6px;
+font-weight: 600;
+cursor: pointer;
+transition: 0.2s;
+}
+
+.remove-btn:hover {
+background-color: var(--hover-color);
+color: var(--background-color);
+}
+
+.secondary-btn {
+background: var(--font-color);
+color: var(--background-color);
+border: 2px solid var(--font-color);
+padding: 12px 24px;
+border-radius: 8px;
+text-decoration: none;
+font-weight: bold;
+}
+
+.secondary-btn:hover {
+background: var(--hover-color);
+}
+
+
+ 
+.price-toggle {
+cursor: pointer;           
+display: inline-block;    
+padding: 4px 10px;         
+border-radius: 6px;        
+transition: all 0.2s ease;  
+font-weight: 800;          
+background-color: var(--background-color);
+user-select: none;         
+}
+
+ 
+.price-toggle::after {
+content: " ⇄";
+font-size: 2em;
+color: var(--font-color);
+font-weight: bold;
+}
+
+
+/* --- Footer --- */
+footer {
+background: var(--accent1-color);
+padding: 3rem 0;
+text-align: center;
+margin-top: auto;
+width: 100%;
+}
+
+footer .footer-content p, 
+footer p {
+color: var(--background-color); 
+margin: 0.5rem 0;
+font-size: 1rem;
+display: block;  
+opacity: 1;
+}
+/* --- Utilities --- */
+.hidden { display: none ; }
+
+#loading {
+grid-column: 1 / -1;
+text-align: center;
+padding: 3rem;
+color: var(--font-colors);
+font-weight: bold;
+font-size: 1.2rem;
+}
+
+
+/* --- MOBILE CSS --- */
+@media (max-width: 768px) {
+/* Header & Nav */
+nav.container {
+flex-direction: row ; 
+justify-content: space-between;
+padding: 10px 15px;
+align-items: center;
+ 
+border-bottom: 2px solid var(--font-color);
+}
+
+
+.logo h1 {
+font-size: 1.1rem;  
+text-align: left;
+margin: 0;
+line-height: 1.2;
+}
+
+/* .logo h1 span {
+font-size: 0.9rem;
+display: block;  
+} */
+
+
+.header-logo-svg {
+width: 35px; 
+height: auto;
+}
+
+
+.cart-badge {
+width: 18px;
+height: 18px;
+font-size: 0.7rem;
+top: -5px;
+right: -8px;
+}
+
+
+/* Hero Section */
+.cta h1 {
+font-size: 2.2rem ;
+padding: 0 10px;
+}
+
+.hero-box {
+height: 300px;
+}
+
+/* Car Listing */
+#car-list-container {
+grid-template-columns: 1fr;
+padding: 15px;
+}
+
+.car-card img {
+height: 180px;  
+}
+
+/* Brand car Logos in main page */
+.brand-logos {
+padding: 20px;
+justify-content: center;
+gap: 20px;
+}
+
+.brand-item img {
+width: 50px;
+}
+
+/* Car Details Page */
+.details-content {
+grid-template-columns: 1fr;
+gap: 20px;
+padding: 15px;
+}
+
+.details-container h1 {
+font-size: 1.8rem;
+}
+
+#specs-grid {
+margin-left: 0; 
+max-width: 100%;
+}
+
+/* Reservation Page and the form */
+.reservation-container {
+flex-direction: column;
+    margin: 10px auto;
+}
+
+.reservation-box {
+min-width: 100%;
+padding: 20px;
+}
+
+/* Cart/Reservation page */
+.cart-item {
+flex-direction: column;
+text-align: center;
+gap: 15px;
+}
+
+/* Utility Buttons should   */
+button, .primary-btn, .submit-btn, .car-card .detail-btn {
+width: 100%;  
+padding: 16px;
+}
+
+
+/* Target the container holding these buttons */
+.cart-footer, 
+.cart-actions { 
+display: flex;
+flex-direction: column; 
+gap: 15px;             
+padding: 20px;
+width: 100%;
+}
+
+/* Style the buttons to be uniform and full-width */
+.cart-actions a, 
+.cart-actions button,
+.primary-btn, 
+.secondary-btn {
+display: block;         
+width: 100%;             
+text-align: center;
+padding: 18px;          
+margin: 0;              
+box-sizing: border-box;  
+}
+
+ 
+.primary-btn {
+font-size: 1.2rem;
+order: 1;  
+}
+
+.secondary-btn {
+order: 2;  
+}}

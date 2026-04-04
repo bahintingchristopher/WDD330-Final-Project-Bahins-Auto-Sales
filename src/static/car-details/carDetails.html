@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WDD 330 - Bahins Auto Sales as Final Project by  Christopher T. Bahinting.">
+  <title>Car Details page - Bahins Auto Sales | Quality Vehicles in Cebu</title>
+
+      <link rel="stylesheet" href="/src/style.css">
+       <link rel="stylesheet" href="/src/mobile.css">
+</head>
+<body>
+    <header id="main-header"></header>
+
+   <main class="details-container">
+  <h1 id="car-title">Loading...</h1>
+
+  <div class="details-content">
+    
+    <section class="car-visual">
+      <img id="car-image" src="" alt="Car Image">
+    </section>
+
+    <section class="car-specs">
+      <h2>Specifications</h2>
+      <div id="specs-grid">
+        <div class="spec-item"><strong>Brand:</strong> <span id="spec-brand"></span></div>
+        <div class="spec-item"><strong>Model:</strong> <span id="spec-model"></span></div>
+        <div class="spec-item"><strong>Type:</strong> <span id="spec-type"></span></div>
+        <div class="spec-item"><strong>ID:</strong> <span id="spec-id"></span></div>
+        <div class="spec-item"><strong>Condition:</strong> <span id="spec-condition">Certified Pre-Owned</span></div>
+        <div class="spec-item"><span id="car-price" class="highlight-price price-toggle"></span>
+</div>
+
+      </div>
+      <p id="car-description" class="description-text"></p>
+
+      <!-- <button href="../reserveNow/reserveNow.html" class="button-style">RESERVE NOW</button> -->
+       <a href="/src/static/reserveNow/reserveNow.html" class="button-style">RESERVE NOW</a>
+    </section>
+
+  </div>
+</main>
+
+    <script src="../../js/carDetails.js" type="module"></script>
+    
+    <footer id="main-footer"></footer>
+    
+</body>
+</html>
