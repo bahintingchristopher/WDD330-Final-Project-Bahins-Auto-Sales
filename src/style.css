@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+
 /* --- Global Variables --- */
 :root {
 --background-color:  #FFFFFF;
@@ -6,8 +10,6 @@
 --accent1-color: #1768AC;
 --accent2-color : #06BEE1;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
  
 h1, h2, h3, .brand-title {
