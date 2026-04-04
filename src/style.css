@@ -1,29 +1,27 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-
-
-/* --- Global Variables --- */
 :root {
 --background-color:  #FFFFFF;
 --font-color: #03256C;
 --hover-color: #2541B2;
 --accent1-color: #1768AC;
 --accent2-color : #06BEE1;
+
+--heading-font: 'Playfair Display', serif;
+--body-font: 'Montserrat', sans-serif;
 }
 
  
 h1, h2, h3, .brand-title {
-font-family: 'Playfair Display', serif;
+font-family: var(--heading-font);
 }
 
-/* --- Layout Reset --- */
+ 
 * {
 box-sizing: border-box;
 }
 
 body {
 margin: 0;
-font-family: 'Montserrat', sans-serif;
+font-family: var(--body-font);
 background-color: var(--background-color);
 color: var(--font-color);
 line-height: 1.6;
@@ -32,7 +30,6 @@ flex-direction: column;
 min-height: 100vh; 
 }
 
-/* Main expands to push the footer down */
 main {
 flex: 1; 
 }
