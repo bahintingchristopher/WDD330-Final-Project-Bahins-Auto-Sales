@@ -22,7 +22,7 @@ async function init() {
                 localStorage.removeItem('car-reservation-cart');
             
                 // window.location.href = "../thankyou/thankyou.html"; this was the original path, but it caused issues when deployed on render, so I changed it to an absolute path
-                window.location.href = "/thankyou/thankyou.html";
+                window.location.href = `${cleanBase}thankyou/thankyou.html`;
             
         });
     }
