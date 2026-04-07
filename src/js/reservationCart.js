@@ -18,7 +18,7 @@ async function init() {
     if (addMoreBtn) {
         addMoreBtn.addEventListener('click', () => {
 
-            window.location.href = `${cleanBase}index.html`;
+           window.location.href = "/";
         });
     }
 
