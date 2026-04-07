@@ -7,24 +7,30 @@ async function init() {
     await loadHeaderFooter();
     renderCart();
 
-    // Attach ONE listener to the container (Event Delegation)
+    // Handle clicks for 'Remove' and 'Currency Toggle'
     const container = document.querySelector('#cart-list');
     if (container) {
         container.addEventListener('click', handleContainerClick);
     }
 
-    // for the finalied reservation button, we can clear the cart and redirect to the thank you page
-    const checkoutBtn = document.querySelector('#checkout-btn');
+    // Add More Vehicles Button target to home page
+    const addMoreBtn = document.querySelector('#add-more-btn'); 
+    if (addMoreBtn) {
+        addMoreBtn.addEventListener('click', () => {
+                
+            window.location.href = `${cleanBase}src/static/car-listing/index.html`;
+        });
+    }
 
+    // Finalize Reservation Button (Targets the thank you page)
+    const checkoutBtn = document.querySelector('#checkout-btn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
-         
-                localStorage.removeItem('car-reservation-cart');
+            // Clear the specific cart from storage
+            localStorage.removeItem('car-reservation-cart');
             
-                // window.location.href = "../thankyou/thankyou.html"; this was the original path, but it caused issues when deployed on render, so I changed it to an absolute path
-                // window.location.href = `${cleanBase}thankyou/thankyou.html`;
-                window.location.href = `${cleanBase}src/static/thankyou/thankyou.html`;
-            
+            // Redirect using the full path from the root
+            window.location.href = `${cleanBase}src/static/thankyou/thankyou.html`;
         });
     }
 }
