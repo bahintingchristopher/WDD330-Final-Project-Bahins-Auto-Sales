@@ -2,6 +2,7 @@ import { getLiveExchangeRate } from './currency.js';
 
 export async function loadHeaderFooter() {
   try {
+    // Use the base URL for GitHub Pages or local development
     const baseUrl = import.meta.env.BASE_URL;
 
     const headerHtml = await loadTemplate(`${baseUrl}partial/header.html`);
