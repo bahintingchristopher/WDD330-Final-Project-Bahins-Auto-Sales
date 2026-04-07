@@ -15,12 +15,16 @@ async function init() {
 
     // Add More Vehicles Button target to home page
     const addMoreBtn = document.querySelector('#add-more-btn'); 
-    if (addMoreBtn) {
-        addMoreBtn.addEventListener('click', () => {
 
-           window.location.href = "/";
-        });
-    }
+if (addMoreBtn) {
+    addMoreBtn.addEventListener('click', (e) => {
+        e.preventDefault();  
+      
+        window.location.href = "/"; 
+    });
+} else {
+    console.error("Could not find the button with ID #add-more-btn");
+}
 
     // Finalize Reservation Button (Targets the thank you page)
     const checkoutBtn = document.querySelector('#checkout-btn');
