@@ -17,8 +17,8 @@ async function init() {
     const addMoreBtn = document.querySelector('#add-more-btn'); 
     if (addMoreBtn) {
         addMoreBtn.addEventListener('click', () => {
-                
-            window.location.href = `${cleanBase}src/static/car-listing/index.html`;
+
+            window.location.href = `${cleanBase}index.html`;
         });
     }
 

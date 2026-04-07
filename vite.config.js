@@ -16,7 +16,8 @@ export default defineConfig({
         carListing: resolve(__dirname, 'src/static/car-listing/carListing.html'),
         carDetails: resolve(__dirname, 'src/static/car-details/carDetails.html'),
         reserveNow: resolve(__dirname, 'src/static/reserveNow/reserveNow.html'),
-        reservationCart: resolve(__dirname, 'src/static/reservationCart/reservationCart.html')
+        reservationCart: resolve(__dirname, 'src/static/reservationCart/reservationCart.html'),
+        thankyou: resolve(__dirname, 'src/static/thankyou/thankyou.html'),
       },
     },
   },
