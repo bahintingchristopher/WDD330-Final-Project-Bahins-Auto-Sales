@@ -13,18 +13,18 @@ async function init() {
         container.addEventListener('click', handleContainerClick);
     }
 
-    // Add More Vehicles Button target to home page
-    const addMoreBtn = document.querySelector('#add-more-btn'); 
+//     // Add More Vehicles Button target to home page but i'd trasferred the link to reservationCart.html to make it more intuitive and user-friendly.
+//     const addMoreBtn = document.querySelector('#add-more-btn'); 
 
-if (addMoreBtn) {
-    addMoreBtn.addEventListener('click', (e) => {
-        e.preventDefault();  
+// if (addMoreBtn) {
+//     addMoreBtn.addEventListener('click', (e) => {
+//         e.preventDefault();  
       
-        window.location.href = "/"; 
-    });
-} else {
-    console.error("Could not find the button with ID #add-more-btn");
-}
+//         window.location.href = "/"; 
+//     });
+// } else {
+//     console.error("Could not find the button with ID #add-more-btn");
+// }
 
     // Finalize Reservation Button (Targets the thank you page)
     const checkoutBtn = document.querySelector('#checkout-btn');
