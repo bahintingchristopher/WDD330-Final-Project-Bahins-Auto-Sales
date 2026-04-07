@@ -1,4 +1,4 @@
-import { loadHeaderFooter, updateCartCount } from './utils.mjs';
+import { loadHeaderFooter, updateCartCount, cleanBase } from './utils.mjs';
 
 // Define a conversion rate
 const PHP_TO_USD = 0.018; 
