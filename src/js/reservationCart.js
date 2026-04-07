@@ -12,6 +12,19 @@ async function init() {
     if (container) {
         container.addEventListener('click', handleContainerClick);
     }
+
+    // for the finalied reservation button, we can clear the cart and redirect to the thank you page
+    const checkoutBtn = document.querySelector('#checkout-btn');
+
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', () => {
+         
+                localStorage.removeItem('car-reservation-cart');
+            
+                window.location.href = "../thankyou/thankyou.html";
+            
+        });
+    }
 }
 
 function renderCart() {
@@ -51,14 +64,14 @@ function renderCart() {
 
 // Unified Handler for clicks inside the cart list
 function handleContainerClick(e) {
-    // 1. Handle Currency Toggle
+    // Handle Currency Toggle
     const toggleEl = e.target.closest('.price-toggle');
     if (toggleEl) {
         toggleCurrency(toggleEl);
         return; // Stop here if we found a toggle
     }
 
-    // 2. Handle Remove Button
+    // Handle Remove Button
     const removeBtn = e.target.closest('.remove-btn');
     if (removeBtn) {
         const index = removeBtn.getAttribute('data-index');

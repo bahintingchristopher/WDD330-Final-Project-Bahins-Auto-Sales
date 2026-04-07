@@ -1,7 +1,6 @@
 import { loadHeaderFooter } from './utils.mjs';
 import { fetchModelsByMake } from './carInventory.mjs';
 import { getCarImage, renderCarCard } from './gallery.mjs';
- 
 import { generateRandomPrice, toggleCurrency } from './priceConversion.mjs';
 
 // GLOBAL EVENT LISTENER (Outside of all functions) ---
@@ -58,7 +57,6 @@ async function getCarData(brand) {
 async function renderInventoryList(container, brand, carList) {
     container.innerHTML = ""; 
     
-    // 1. Load the Price Book from LocalStorage
     let priceBook = JSON.parse(localStorage.getItem('car_price_book')) || {};
     let bookUpdated = false;
 

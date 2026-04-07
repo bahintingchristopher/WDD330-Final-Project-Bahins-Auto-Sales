@@ -92,8 +92,7 @@ export async function filterInventoryByBrand(brandName) {
     console.log(`Filtering for: ${brandName}`);
     const models = await fetchModelsByMake(brandName);
 
-    // We use curly braces {} and a "return" statement so we can run code 
-    // inside the map function before creating the object.
+   
     const formattedCars = models.slice(0, 12).map(m => {
         const stablePrice = getStickyPrice(m.Model_ID); // Get the "locked" price
         
@@ -109,7 +108,6 @@ export async function filterInventoryByBrand(brandName) {
     renderCarList(formattedCars);
 }
 
-// 5. Default Init
 export async function initInventory(limit = 8, brand = "TOYOTA") {
     await filterInventoryByBrand(brand); 
 }

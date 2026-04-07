@@ -1,32 +1,4 @@
-// import { loadHeaderFooter, loadDynamicBrands } from './utils.mjs';
-// import { initHeroSlider } from './hero.mjs';
 
-// async function headerfooter7logo() {
-    
-//     await loadHeaderFooter();
-
-//     const path = window.location.pathname;
-
-//     const isHome = path.endsWith('index.html') || 
-//                    path.endsWith('/WDD330-Final-Project-Bahins-Auto-Sales/') || 
-//                    path === '/' || 
-//                    path.endsWith('/');
-
-//     if (isHome) {
-//         console.log("Home page detected - loading hero and brands");
-        
-//         const brandListElement = document.querySelector('.brand-logos');
-//         if (brandListElement) {
-//             await loadDynamicBrands(brandListElement);
-//         }
-
-//         // Initialize from hero.js
-//         initHeroSlider(); 
-//     } 
-// }
-
-// document.addEventListener('DOMContentLoaded', headerfooter7logo);
-// main.js
 import { loadHeaderFooter, loadDynamicBrands } from './utils.mjs';
 import { initHeroSlider } from './hero.mjs';
 
