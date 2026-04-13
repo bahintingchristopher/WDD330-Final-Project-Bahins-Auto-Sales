@@ -23,24 +23,41 @@ export async function getCarImage(make, model) {
     
     const data = await response.json();
 
-    let finalUrl;
+   let imageData; // We store the whole object now
     if (data.hits && data.hits.length > 0) {
-      finalUrl = data.hits[0].webformatURL;
+      const hit = data.hits[0];
+      imageData = {
+        url: hit.webformatURL,
+        tags: hit.tags,           // Direct Attribute 6
+        likes: hit.likes,         // Direct Attribute 7
+        views: hit.views,         // Direct Attribute 8
+        author: hit.user          // Direct Attribute 9
+      };
     } else {
-      //Fallback if no specific model found
-      finalUrl = 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=600';
+      // Fallback object
+      imageData = {
+        url: 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=600',
+        tags: 'car, vehicle',
+        likes: 0,
+        views: 0,
+        author: 'Pexels'
+      };
     }
 
-    //Store in cache before returning
-    imageCache.set(cacheKey, finalUrl);
-    return finalUrl;
+    imageCache.set(cacheKey, imageData);
+    return imageData;
     
   } catch (error) {
     console.error("Gallery Image Fetch Error:", error);
-    return 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=600';
+    return {
+      url: 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=600',
+      tags: 'error',
+      likes: 0,
+      views: 0,
+      author: 'System'
+    };
   }
 }
-
 
 //   // Generates the HTML string for a single car card
 //  export function renderCarCard(make, model, imageUrl, pricePHP) {
@@ -67,22 +84,29 @@ export async function getCarImage(make, model) {
 
 // Inside the gallery.mjs 
 // Generates the HTML string for a single car card
-export function renderCarCard(make, displayName, imageUrl, usdPrice) {
-  // Ensure we have a clean number for the data-attribute
+export function renderCarCard(make, displayName, imageData, usdPrice) {
   const basePrice = Number(usdPrice);
+
+  // This line pulls the variables out of the object fetched
+  const { url, tags, likes, views, author } = imageData;
 
   return `
     <div class="car-card">
       <div class="image-container">
-        <img src="${imageUrl}" 
+        <img src="${url}" 
              alt="${make} ${displayName}" 
              loading="lazy"
              onerror="this.src='https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=600'">
+        <span class="img-tag-overlay">${tags.split(',')[0]}</span> 
       </div>
       <div class="card-content">
         <span class="make-label">${make}</span>
         <h3>${displayName}</h3>
         
+        <div class="api-metadata">
+           <small>Views: ${views.toLocaleString()} | Likes: ${likes}</small>
+        </div>
+
         <p class="price-toggle" 
            data-base-price="${basePrice}" 
            data-currency="USD" 
@@ -93,6 +117,7 @@ export function renderCarCard(make, displayName, imageUrl, usdPrice) {
         <button class="detail-btn" 
                 data-brand="${make}" 
                 data-model="${displayName}"
+                data-pixabay-author="${author}"
                 aria-label="View details for ${make} ${displayName}">
           View Details
         </button>

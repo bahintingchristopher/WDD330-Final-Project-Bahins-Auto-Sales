@@ -2,6 +2,7 @@ import { loadHeaderFooter, getParam } from './utils.mjs';
 import { getCarImage } from './gallery.mjs'; 
 import { fetchModelsByMake } from './carInventory.mjs'; 
 import { toggleCurrency } from './priceConversion.mjs';
+import { getLiveExchangeRate } from './currency.js';
 
 async function init() {
     await loadHeaderFooter();
@@ -20,17 +21,40 @@ async function init() {
             );
 
             if (carData) {
+                // 1. SET BASIC TECHNICAL SPECS (NHTSA)
                 document.querySelector('#spec-model').textContent = carData.Model_Name;
                 document.querySelector('#spec-type').textContent = carData.VehicleTypeName || "Sedan/SUV";
                 document.querySelector('#spec-id').textContent = carData.Model_ID;
                 document.querySelector('#spec-brand').textContent = brand.toUpperCase();
-                document.querySelector('#car-description').textContent = 
-                    `This ${brand} ${model} is a top-tier vehicle. System ID: ${carData.Model_ID}`;
 
-                const imageUrl = await getCarImage(brand, model);
+                // fetching the live rate
+                const rate = await getLiveExchangeRate();
+
+                if (document.querySelector('#current-rate')) {
+                    document.querySelector('#current-rate').textContent = rate.toFixed(2);
+                }
+
+
+                // 2. FETCH ENRICHED DATA (PIXABAY OBJECT)
+                // Since getCarImage now returns an object {url, tags, likes, views, author}
+                const imageData = await getCarImage(brand, model);
+                
                 const carImgElement = document.querySelector('#car-image');
-                if (carImgElement) carImgElement.src = imageUrl;
+                if (carImgElement) carImgElement.src = imageData.url; // Use the .url property
 
+                // 3. REPLACE RANDOM DATA WITH DIRECT API ATTRIBUTES
+                // Instead of Math.random(), we use the Pixabay data for extra attributes
+                if(document.querySelector('#spec-year')) document.querySelector('#spec-year').textContent = "2020";
+                
+                // Show 'likes' and 'views' as new direct attributes on the details page
+                if(document.querySelector('#spec-likes')) document.querySelector('#spec-likes').textContent = imageData.likes;
+                if(document.querySelector('#spec-views')) document.querySelector('#spec-views').textContent = imageData.views.toLocaleString();
+                
+                // Use the Tags as "Features"
+                const description = `This ${brand.toUpperCase()} ${model.toUpperCase()} is a verified vehicle entry. Keywords: ${imageData.tags}. Photo credit: ${imageData.author}.`;
+                document.querySelector('#car-description').textContent = description;
+
+                // 4. PRICE HANDLING (LOCALSTORAGE)
                 const priceBook = JSON.parse(localStorage.getItem('car_price_book')) || {};
                 const carIdKey = String(carData.Model_ID).trim();
                 const usdPrice = priceBook[carIdKey] || 25000;
@@ -41,8 +65,6 @@ async function init() {
                     priceElement.setAttribute('data-base-price', usdPrice);
                     priceElement.setAttribute('data-currency', 'USD');
                     priceElement.textContent = `$${usdPrice.toLocaleString()}`;
-                    priceElement.style.cursor = 'pointer';
-                    priceElement.style.fontWeight = 'bold';
                 }
             }
         } catch (err) {
@@ -65,13 +87,15 @@ async function init() {
             const currentImage = document.querySelector('#car-image').src;
             const currentId = document.querySelector('#spec-id').textContent;
 
-            const params = new URLSearchParams({
+           const params = new URLSearchParams({
                 id: currentId,
                 make: currentBrand,
                 model: currentModel,
                 price: currentPrice,
                 image: currentImage,
-                year: "2025"
+                year: document.querySelector('#spec-year')?.textContent || "2020",
+                fuel: "Gasoline",
+                transmission: "Automatic"
             });
 
             
@@ -85,10 +109,10 @@ async function init() {
 }  
 
  
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
     const toggleEl = e.target.closest('.price-toggle');
     if (toggleEl) {
-        toggleCurrency(toggleEl);
+        await toggleCurrency(toggleEl);
     }
 });
 

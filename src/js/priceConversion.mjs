@@ -1,31 +1,38 @@
-// Current estimated exchange rate for 2026
-const USD_TO_PHP_RATE = 56.45; 
+import { getLiveExchangeRate } from './currency.js';
 
-/**
- * Converts a USD amount to PHP and returns a formatted string.
- */
-export function convertToPHP(usdAmount) {
+//  Converts a USD amount to PHP using the LIVE rate from currency.mjs
+export async function convertToPHP(usdAmount) {
     if (!usdAmount || isNaN(usdAmount)) return "₱0";
-    const phpTotal = usdAmount * USD_TO_PHP_RATE;
 
-    return new Intl.NumberFormat('en-PH', {
-        style: 'currency',
-        currency: 'PHP',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    }).format(phpTotal);
+    try {
+        // Fetch the live rate (uses cache automatically from the currency logic)
+        const rate = await getLiveExchangeRate();
+        const phpTotal = usdAmount * rate;
+
+        return new Intl.NumberFormat('en-PH', {
+            style: 'currency',
+            currency: 'PHP',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(phpTotal);
+    } catch (error) {
+        console.error("Conversion Error:", error);
+        return "₱0";
+    }
 }
 
- 
-export function toggleCurrency(element) {
+// Toggles the UI element between USD and PHP display.
+export async function toggleCurrency(element) {
     const basePriceUSD = parseFloat(element.getAttribute('data-base-price'));
     const currentCurrency = element.getAttribute('data-currency');
 
     if (currentCurrency === "USD") {
-        // Change to Peso
-        element.textContent = `Price: ${convertToPHP(basePriceUSD)}`;
+        // Change to PHP using live data
+        const formattedPHP = await convertToPHP(basePriceUSD);
+        
+        element.textContent = `Price: ${formattedPHP}`;
         element.setAttribute('data-currency', 'PHP');
-        element.title = "Click to switch to USD"; // Helpful tooltip
+        element.title = "Click to switch back to USD";
     } else {
         // Change back to USD
         element.textContent = `Price: $${basePriceUSD.toLocaleString()}`;
@@ -34,9 +41,7 @@ export function toggleCurrency(element) {
     }
 }
 
-/**
- * Simulates a database price for the car inventory.
- */
+
 export function generateRandomPrice() {
     return Math.floor(Math.random() * (85000 - 15000 + 1) + 15000);
 }

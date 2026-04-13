@@ -1,6 +1,9 @@
+import { getCarImage, renderCarCard } from './gallery.mjs';
+
 // Ensurings the price never changes for a specific car ID
 function getStickyPrice(carId) {
     let priceBook = JSON.parse(localStorage.getItem('car_price_book')) || {};
+    
 
     if (priceBook[carId]) {
         return priceBook[carId];
@@ -16,12 +19,6 @@ function getStickyPrice(carId) {
 }
 
 
-// 1. Helper for placeholder images
-function getCarImage(brand, id) {
-    return `https://loremflickr.com/400/300/car,${brand.toLowerCase()}?lock=${id}`;
-}
-
-// 2. Main Fetch Function (NHTSA API)
 export async function fetchModelsByMake(make) {
     const cleanMake = make.trim().toUpperCase();
     const cacheKey = `raw_models_${cleanMake}`;
@@ -30,11 +27,9 @@ export async function fetchModelsByMake(make) {
         const cached = sessionStorage.getItem(cacheKey);
         if (cached) return JSON.parse(cached);
 
+        // We use the 'getmodelsformake' endpoint
         const url = `https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/${cleanMake}?format=json`;
         const response = await fetch(url);
-
-        if (!response.ok) throw new Error(`NHTSA API Error: ${response.status}`);
-
         const data = await response.json();
         const results = data.Results || [];
 
@@ -42,72 +37,42 @@ export async function fetchModelsByMake(make) {
         return results;
     } catch (error) {
         console.error("Inventory Fetch Error:", error);
-        return []; // Always return an empty array on error, NOT HTML!
+        return [];
     }
 }
 
-// 3. Render Function (Building the HTML with Data Attributes)
-export function renderCarList(cars) {
-    // const container = document.getElementById('app'); 
+// 3. Updated Filter Function (The Bridge)
+export async function filterInventoryByBrand(brandName) {
     const container = document.getElementById('car-list-container');
     if (!container) return;
 
-    const rate = window.currentExchangeRate || 56.20;
+    const models = await fetchModelsByMake(brandName);
+    
+    // We only take the first 12 to avoid hitting the Pixabay limit too fast
+    const selectedModels = models.slice(0, 12);
 
-    if (cars.length === 0) {
-        container.innerHTML = "<p>No vehicles found for this selection.</p>";
-        return;
-    }
+    // CRITICAL: We use Promise.all because we are fetching images for 12 cars at once
+    const formattedCars = await Promise.all(selectedModels.map(async (m) => {
+        const stablePrice = getStickyPrice(m.Model_ID);
+        
+        // FETCH THE SUPER-OBJECT (Attributes 6, 7, 8, 9, 10)
+        const imageData = await getCarImage(m.Make_Name, m.Model_Name);
 
-    const html = cars.map(car => {
-        const usdPrice = car.priceUSD || 25000;
-        const phpPrice = (usdPrice * rate).toLocaleString();
+        return {
+            id: m.Model_ID,          // Attr 1
+            brand: m.Make_Name,      // Attr 2
+            model: m.Model_Name,     // Attr 3
+            makeId: m.Make_ID,       // Attr 4
+            priceUSD: stablePrice,   // Business Logic
+            imageData: imageData,    // Attr 6, 7, 8, 9 (The Pixabay Object)
+            year: 2020               // Attr 5 (Direct from our search intent)
+        };
+    }));
 
-        return `
-            <div class="car-card">
-                <div class="card-image-wrapper">
-                    <img src="${car.image}" alt="${car.brand} ${car.model}" loading="lazy">
-                </div>
-                <div class="card-info">
-                    <h3>${car.brand} ${car.model}</h3>
-                    <div class="price-box">
-                        <span class="price-usd">$${usdPrice.toLocaleString()}</span>
-                        <span class="price-php">₱${phpPrice}</span>
-                    </div>
-                    <button class="view-btn detail-btn" 
-                            data-brand="${car.brand}" 
-                            data-model="${car.model}">
-                        View Details
-                    </button>
-                </div>
-            </div>
-        `;
-    }).join('');
+    // 4. Render the List using the new renderCarCard function
+    const html = formattedCars.map(car => 
+        renderCarCard(car.brand, car.model, car.imageData, car.priceUSD)
+    ).join('');
 
     container.innerHTML = `<div class="inventory-grid">${html}</div>`;
-}
-
-// 4. Filter Function (Fixed Syntax)
-export async function filterInventoryByBrand(brandName) {
-    console.log(`Filtering for: ${brandName}`);
-    const models = await fetchModelsByMake(brandName);
-
-   
-    const formattedCars = models.slice(0, 12).map(m => {
-        const stablePrice = getStickyPrice(m.Model_ID); // Get the "locked" price
-        
-        return {
-            id: m.Model_ID,
-            brand: m.Make_Name,
-            model: m.Model_Name,
-            priceUSD: stablePrice, // Use that same price here
-            image: getCarImage(m.Make_Name, m.Model_ID)
-        };
-    });
-
-    renderCarList(formattedCars);
-}
-
-export async function initInventory(limit = 8, brand = "TOYOTA") {
-    await filterInventoryByBrand(brand); 
 }
